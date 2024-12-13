@@ -230,6 +230,35 @@ onUnmounted(() => {
 </script>
 
 <template>
+	<div
+		class="bg-gray-50 dark:bg-gray-900 border-2 border-gray-100 dark:border-gray-800 h-full flex flex-col justify-between px-2 pb-5"
+	>
+		<div>
+			<!-- Сообщение о подключении другого пользователя -->
+			<div
+				class="flex items-center justify-between text-center border-b dark:border-gray-700 mt-4 pb-4"
+			>
+				<div></div>
+
+				<!-- users-in-chat -->
+				<div class="leading-5">
+					<div>
+						<p v-if="connectedUser && chatCreator" class="font-light">
+							{{
+								connectedUser
+									? `В чате: ${connectedUser}`
+									: 'Пользователь не присоединился к чату'
+							}}
+						</p>
+
+						<p v-if="chatCreator && !connectedUser" class="font-light">
+							{{
+								chatCreator && !connectedUser
+									? `Создатель чата: ${chatCreator}`
+									: 'Пользователь не присоединился к чату'
+							}}
+						</p>
+					</div>
 
 					<!-- show-users-status -->
 					<div
@@ -365,18 +394,18 @@ onUnmounted(() => {
 				v-if="isInChat"
 				class="flex flex-col space-y-2 mt-4 overflow-y-scroll h-[78vh]"
 			>
-			<div
-				v-for="message in messages"
-				:key="message.id"
-				:class="[
+				<div
+					v-for="message in messages"
+					:key="message.id"
+					:class="[
 						'break-words max-w-xs rounded-lg text-sm px-2 py-1',
 						message.userName === 'Система'
 							? 'bg-gray-100 dark:bg-gray-800 dark:text-gray-500 text-gray-400 italic mx-auto max-w-xs my-2'
 							: message.userName === userName
 							? 'bg-green-200 dark:bg-green-600 self-end message-sent'
 							: 'bg-gray-200 dark:bg-gray-600 self-start message-received',
-				]"
-			>
+					]"
+				>
 					<!-- <strong>{{ message.userName }}:</strong> {{ message.message }} -->
 
 					<div class="flex items-end space-x-1 leading-4">
@@ -392,15 +421,15 @@ onUnmounted(() => {
 							{{ message.time }}
 						</p>
 					</div>
+				</div>
 			</div>
-		</div>
 
-		<!-- Показать, кто печатает -->
+			<!-- Показать, кто печатает -->
 			<div
 				v-if="typingUser"
 				class="typing-indicator text-sm text-gray-500 mb-2"
 			>
-			{{ typingUser }} печатает...
+				{{ typingUser }} печатает...
 			</div>
 		</div>
 
@@ -409,14 +438,14 @@ onUnmounted(() => {
 			v-if="isInChat"
 			class="sticky bottom-0 z-10 rounded flex items-center justify-between border dark:border-gray-700 mx-2"
 		>
-		<input
-			v-model="newMessage"
-			type="text"
-			placeholder="Введите сообщение..."
+			<input
+				v-model="newMessage"
+				type="text"
+				placeholder="Введите сообщение..."
 				class="w-full p-2 rounded-l text-sm dark:outline-none"
-			@keyup.enter="sendMessage"
-			@input="notifyTyping"
-		/>
+				@keyup.enter="sendMessage"
+				@input="notifyTyping"
+			/>
 
 			<button
 				class="bg-green-500 hover:bg-green-600 active:bg-green-700 duration-150 text-white outline-none focus:outline-none px-2.5 py-2.5"
@@ -426,12 +455,12 @@ onUnmounted(() => {
 				<!-- <FileUpload @fileSent="sendFile" /> -->
 			</button>
 
-		<button
+			<button
 				class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 duration-150 text-white outline-none focus:outline-none rounded-r px-2.5 py-2.5"
-			@click="sendMessage"
-		>
+				@click="sendMessage"
+			>
 				<IconSend />
-		</button>
+			</button>
 		</div>
 	</div>
 </template>

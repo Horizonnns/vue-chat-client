@@ -253,6 +253,10 @@ onUnmounted(() => {
 		</div>
 
 		<!-- Поле ввода сообщения -->
+		<div
+			v-if="isInChat"
+			class="sticky bottom-0 z-10 rounded flex items-center justify-between border dark:border-gray-700 mx-2"
+		>
 		<input
 			v-model="newMessage"
 			type="text"
@@ -261,13 +265,22 @@ onUnmounted(() => {
 			@keyup.enter="sendMessage"
 			@input="notifyTyping"
 		/>
-		<FileUpload @fileSent="sendFile" />
+
+			<button
+				class="bg-green-500 hover:bg-green-600 active:bg-green-700 duration-150 text-white outline-none focus:outline-none px-2.5 py-2.5"
+				@click="sendFile"
+			>
+				<IconUpload />
+				<!-- <FileUpload @fileSent="sendFile" /> -->
+			</button>
+
 		<button
-			class="btn bg-blue-500 text-white px-4 py-2 rounded"
+				class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 duration-150 text-white outline-none focus:outline-none rounded-r px-2.5 py-2.5"
 			@click="sendMessage"
 		>
-			Отправить
+				<IconSend />
 		</button>
+		</div>
 	</div>
 </template>
 

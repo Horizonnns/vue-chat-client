@@ -267,8 +267,12 @@ onUnmounted(() => {
 		</div>
 
 		<!-- Показать, кто печатает -->
-		<div v-if="typingUser" class="typing-indicator text-sm text-gray-500 mb-2">
+			<div
+				v-if="typingUser"
+				class="typing-indicator text-sm text-gray-500 mb-2"
+			>
 			{{ typingUser }} печатает...
+			</div>
 		</div>
 
 		<!-- Поле ввода сообщения -->

@@ -230,6 +230,34 @@ onUnmounted(() => {
 </script>
 
 <template>
+				<!-- modal-for-delete-or-leave-chat -->
+				<div v-if="chatCreator" class="relative">
+					<!-- Кнопка с тремя точками -->
+					<button
+						@click="toggleModal"
+						title="Меню"
+						class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 duration-150 outline-none focus-within:outline-none"
+					>
+						<IconDots />
+					</button>
+
+					<!-- Модальное окно -->
+					<div
+						v-if="isModalOpen"
+						class="overflow-auto absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 shadow-lg rounded-md border border-gray-200 dark:border-gray-700 z-10"
+					>
+						<button
+							@click="chatCreator === userName ? deleteChat() : leaveChat()"
+							class="flex items-center w-full px-4 py-2 text-sm text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+						>
+							<IconLeave class="mr-2" />
+							<span>
+								{{ chatCreator === userName ? 'Удалить чат' : 'Покинуть чат' }}
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
 
 			<!-- Начальный экран выбора действия -->
 			<div

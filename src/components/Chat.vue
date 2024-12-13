@@ -86,6 +86,27 @@ const sendMessage = () => {
 	}
 };
 
+// Покинуть чат (для пользователя)
+const leaveChat = () => {
+	if (password.value || chatPassword.value) {
+		socket.emit('leave_room', {
+			userName: userName.value,
+			password: password.value || chatPassword.value,
+		});
+
+		isInChat.value = false; // Выходим из чата
+		connectedUser.value = null; // Очищаем подключенного пользователя
+		chatCreator.value = null; // Удаляем информацию о создателе чата
+		userName.value = null;
+		chatPassword.value = null;
+
+		messages.value.push({
+			userName: 'Система',
+			message: `${userName.value} покинул чат.`,
+		});
+	}
+};
+
 </script>
 
 <template>

@@ -231,6 +231,38 @@ onUnmounted(() => {
 
 <template>
 
+			<!-- Интерфейс для подключения к комнате -->
+			<form
+				v-if="action === 'join'"
+				class="w-60 mx-auto flex flex-col items-center mt-4"
+			>
+				<h3 class="text-lg font-bold mb-4">Подключиться к чату</h3>
+
+				<input
+					v-model="userName"
+					type="text"
+					placeholder="Введите имя"
+					class="w-full p-2 rounded mb-4"
+				/>
+				<input
+					autocomplete
+					v-model="chatPassword"
+					type="password"
+					placeholder="Введите пароль чата"
+					class="w-full p-2 rounded mb-4"
+					maxlength="6"
+					@input="notifyTyping"
+				/>
+
+				<button
+					type="button"
+					@click="joinRoom"
+					class="w-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 duration-150 text-white px-2 py-1.5 rounded"
+				>
+					Подключиться
+				</button>
+			</form>
+
 			<!-- Чат -->
 			<div
 				v-if="isInChat"

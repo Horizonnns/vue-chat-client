@@ -23,6 +23,30 @@ const userStatuses = ref({});
 const isModalOpen = ref(false); // Состояние модального окна
 const timeoutId = ref(null); // Состояние модального окна
 
+
+// Создать комнату
+const createRoom = () => {
+	if (!userName.value.trim() || password.value.length !== 6) {
+		alert('Введите имя и пароль (6 символов).');
+		return;
+	}
+
+	socket.emit(
+		'create_room',
+		{ userName: userName.value, password: password.value },
+		(response) => {
+			if (response.success) {
+				isInChat.value = true;
+				action.value = null;
+				chatCreator.value = userName.value; // Сохраняем себя как создателя
+				messages.value = [];
+			} else {
+				alert(response.message);
+			}
+		}
+	);
+};
+
 </script>
 
 <template>

@@ -6,6 +6,23 @@ import IconSend from './icons/IconSend.vue';
 import IconDots from './icons/IconDots.vue';
 import IconUpload from './icons/IconUpload.vue';
 import IconLeave from './icons/IconLeave.vue';
+
+const messages = ref([]);
+const newMessage = ref('');
+const userName = ref('');
+const password = ref('');
+const chatPassword = ref('');
+const isInChat = ref(false);
+const typingUser = ref(null); // Имя пользователя, который печатает
+const typingTimeout = ref(null);
+// let typingTimeout = null;
+const connectedUser = ref(null);
+const action = ref(null); // null, "create", "join"
+const chatCreator = ref(null); // Имя создателя комнаты
+const userStatuses = ref({});
+const isModalOpen = ref(false); // Состояние модального окна
+const timeoutId = ref(null); // Состояние модального окна
+
 </script>
 
 <template>

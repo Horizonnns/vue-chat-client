@@ -208,6 +208,19 @@ onMounted(() => {
 		}
 	});
 
+	// чат был удален создателем
+	socket.on('room_deleted', () => {
+		alert('Чат был удален создателем.');
+		isInChat.value = false;
+		connectedUser.value = null; // Очищаем подключенного пользователя
+		chatCreator.value = null; // Удаляем информацию о создателе
+		messages.value.push({
+			userName: 'Система',
+			message: `Чат был удален создателем.`,
+		});
+	});
+});
+
 </script>
 
 <template>

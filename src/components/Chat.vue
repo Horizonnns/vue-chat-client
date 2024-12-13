@@ -179,6 +179,13 @@ onMounted(() => {
 	socket.on('new_message', (message) => {
 		messages.value.push(message);
 	});
+
+	// Слушаем уведомление о подключении пользователя
+	socket.on('user_connected', (user) => {
+		connectedUser.value = user; // Устанавливаем имя подключившегося пользователя
+		console.log(user);
+	});
+
 </script>
 
 <template>

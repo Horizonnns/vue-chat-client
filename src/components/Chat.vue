@@ -107,6 +107,28 @@ const leaveChat = () => {
 	}
 };
 
+// Удалить чат (доступно только создателю)
+const deleteChat = () => {
+	if (chatCreator.value === userName.value) {
+		socket.emit('delete_room', {
+			password: password.value,
+		});
+
+		isInChat.value = false; // Завершаем чат
+		connectedUser.value = null; // Очищаем подключенного пользователя
+		chatCreator.value = null; // Удаляем информацию о создателе чата
+		userName.value = null;
+		password.value = null;
+
+		messages.value.push({
+			userName: 'Система',
+			message: `Чат был удален создателем.`,
+		});
+	} else {
+		alert('Только создатель может удалить чат.');
+	}
+};
+
 </script>
 
 <template>

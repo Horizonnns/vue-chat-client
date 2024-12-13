@@ -166,8 +166,14 @@ onMounted(() => {
 		console.log('Updated users:', users);
 	});
 
-});
-
+	// Подключение нового пользователя
+	socket.on('user_joined', (userName) => {
+		messages.value.push({
+			userName: 'Система',
+			message: `${userName} присоединился к чату.`,
+		});
+		connectedUser.value = userName; // Обновляем отображаемое имя подключенного пользователя
+	});
 </script>
 
 <template>

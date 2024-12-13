@@ -129,6 +129,11 @@ const deleteChat = () => {
 	}
 };
 
+// Уведомление о том, что пользователь печатает
+const notifyTyping = () => {
+	socket.emit('typing', userName.value); // Отправляем на сервер, что пользователь печатает
+};
+
 </script>
 
 <template>

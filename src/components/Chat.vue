@@ -1,3 +1,13 @@
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import socket from '../../socket';
+import FileUpload from './FileUpload.vue';
+import IconSend from './icons/IconSend.vue';
+import IconDots from './icons/IconDots.vue';
+import IconUpload from './icons/IconUpload.vue';
+import IconLeave from './icons/IconLeave.vue';
+</script>
+
 <template>
 	<div class="chat-container bg-gray-100 p-4 rounded shadow">
 		<!-- Список сообщений -->

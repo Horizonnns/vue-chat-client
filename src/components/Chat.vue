@@ -231,6 +231,30 @@ onUnmounted(() => {
 
 <template>
 
+			<!-- Начальный экран выбора действия -->
+			<div
+				v-if="!isInChat && !action"
+				class="flex flex-col items-center justify-center mt-4"
+			>
+				<h2 class="text-lg font-bold">Добро пожаловать в чат</h2>
+
+				<div class="flex space-x-4 mt-4">
+					<button
+						@click="action = 'create'"
+						class="bg-green-500 text-white p-2 rounded"
+					>
+						Создать чат
+					</button>
+
+					<button
+						@click="action = 'join'"
+						class="bg-blue-500 text-white p-2 rounded"
+					>
+						Подключиться к чату
+					</button>
+				</div>
+			</div>
+
 			<!-- Интерфейс для создания комнаты -->
 			<form
 				v-if="action === 'create'"

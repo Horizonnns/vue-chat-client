@@ -231,6 +231,37 @@ onUnmounted(() => {
 
 <template>
 
+			<!-- Интерфейс для создания комнаты -->
+			<form
+				v-if="action === 'create'"
+				class="w-60 mx-auto flex flex-col items-center justify-center mt-4"
+			>
+				<h3 class="text-lg font-bold mb-4">Создать чат</h3>
+
+				<input
+					v-model="userName"
+					type="text"
+					placeholder="Введите имя"
+					class="w-full p-2 rounded mb-4"
+				/>
+				<input
+					autocomplete
+					v-model="password"
+					type="password"
+					placeholder="Введите пароль (6 символов)"
+					class="w-full p-2 rounded mb-4"
+					maxlength="6"
+				/>
+
+				<button
+					type="button"
+					@click="createRoom"
+					class="w-full bg-green-500 hover:bg-green-600 active:bg-green-700 duration-150 text-white px-2 py-1.5 rounded"
+				>
+					Создать
+				</button>
+			</form>
+
 			<!-- Интерфейс для подключения к комнате -->
 			<form
 				v-if="action === 'join'"

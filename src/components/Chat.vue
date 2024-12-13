@@ -23,6 +23,18 @@ const userStatuses = ref({});
 const isModalOpen = ref(false); // Состояние модального окна
 const timeoutId = ref(null); // Состояние модального окна
 
+// Открываем модальное окно
+const toggleModal = () => {
+	isModalOpen.value = !isModalOpen.value;
+
+	if (timeoutId.value) return;
+	clearTimeout(timeoutId.value);
+
+	timeoutId.value = setTimeout(() => {
+		isModalOpen.value = false;
+		timeoutId.value = null;
+	}, 5000);
+};
 
 // Создать комнату
 const createRoom = () => {

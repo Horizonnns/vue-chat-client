@@ -174,6 +174,11 @@ onMounted(() => {
 		});
 		connectedUser.value = userName; // Обновляем отображаемое имя подключенного пользователя
 	});
+
+	// Отправка сообшении пользователем
+	socket.on('new_message', (message) => {
+		messages.value.push(message);
+	});
 </script>
 
 <template>

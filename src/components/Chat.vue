@@ -221,6 +221,12 @@ onMounted(() => {
 	});
 });
 
+onUnmounted(() => {
+	socket.off('new_message');
+	socket.off('user_connected');
+	socket.off('typing');
+	socket.off('room_deleted');
+});
 </script>
 
 <template>

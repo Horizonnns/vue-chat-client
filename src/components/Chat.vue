@@ -284,7 +284,7 @@ onUnmounted(() => {
 			v-model="newMessage"
 			type="text"
 			placeholder="Введите сообщение..."
-			class="w-full p-2 border rounded mb-2"
+				class="w-full p-2 rounded-l text-sm dark:outline-none"
 			@keyup.enter="sendMessage"
 			@input="notifyTyping"
 		/>
@@ -307,85 +307,7 @@ onUnmounted(() => {
 	</div>
 </template>
 
-<script>
-import socket from '../../socket';
-import FileUpload from './FileUpload.vue';
-
-export default {
-	components: { FileUpload },
-	data() {
-		return {
-			messages: [], // Список сообщений
-			newMessage: '', // Текст нового сообщения
-			userName: '', // Имя текущего пользователя
-			typingUser: null, // Имя пользователя, который печатает
-		};
-	},
-	created() {
-		// Устанавливаем имя пользователя при подключении
-		this.userName = prompt('Введите ваше имя') || 'Гость';
-
-		// Слушаем новые сообщения от сервера
-		socket.on('new_message', (message) => {
-			this.messages.push(message);
-		});
-
-		// Слушаем уведомление о том, кто печатает
-		socket.on('typing', (user) => {
-			console.log('user: ', user);
-
-			if (user !== this.userName) {
-				this.typingUser = user;
-				// Таймер для скрытия статуса через 2 секунды после прекращения набора
-				clearTimeout(this.typingTimeout);
-				this.typingTimeout = setTimeout(() => {
-					this.typingUser = null;
-				}, 2000);
-			}
-		});
-
-		// Сообщаем серверу имя пользователя
-		socket.emit('join', { userName: this.userName });
-	},
-	methods: {
-		// Отправка нового сообщения
-		sendMessage() {
-			if (this.newMessage.trim()) {
-				const message = {
-					sender: this.userName,
-					text: this.newMessage,
-				};
-				socket.emit('send_message', message); // Отправляем на сервер
-				this.newMessage = ''; // Очищаем поле ввода
-				this.typingUser = null; // Скрываем статус печати после отправки
-			}
-		},
-		// Уведомление о том, что пользователь печатает
-		notifyTyping() {
-			socket.emit('typing', this.userName); // Отправляем на сервер, что пользователь печатает
-		},
-		sendFile(file) {
-			const reader = new FileReader();
-			reader.onload = () => {
-				const data = {
-					sender: this.userName,
-					file: reader.result,
-					fileName: file.name,
-				};
-				socket.emit('send_file', data);
-			};
-			reader.readAsDataURL(file);
-		},
-	},
-};
-</script>
-
 <style scoped>
-.chat-container {
-	max-width: 600px;
-	margin: 0 auto;
-}
-
 .user-name {
 	color: #1d4ed8; /* Синий для имени пользователя */
 	padding: 10px;
@@ -396,13 +318,47 @@ export default {
 	font-weight: bold;
 }
 
-.messages {
-	display: flex;
-	flex-direction: column;
-}
-
 .typing-indicator {
 	font-style: italic;
 	color: #aaa;
+}
+
+.message-sent {
+	position: relative;
+	background-color: #d1fae5; /* Светло-зеленый */
+	color: #065f46; /* Темно-зеленый текст */
+}
+
+.message-received {
+	position: relative;
+	background-color: #e5e7eb; /* Светло-серый */
+	color: #111827; /* Темный текст */
+}
+
+/* Стрелка для отправленных сообщений */
+.message-sent::after {
+	content: '';
+	position: absolute;
+	right: -1px;
+	bottom: 0;
+	width: 0;
+	height: 0;
+	border-width: 4px;
+	border-style: solid;
+	border-color: transparent transparent #d1fae5 transparent;
+}
+
+/* Стрелка для полученных сообщений */
+.message-received::after {
+	transform: rotate(90deg);
+	content: '';
+	position: absolute;
+	left: -1px;
+	bottom: 0;
+	width: 0;
+	height: 0;
+	border-width: 4px;
+	border-style: solid;
+	border-color: transparent #e5e7eb transparent transparent;
 }
 </style>

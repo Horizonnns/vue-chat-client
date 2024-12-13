@@ -160,6 +160,14 @@ const sendFile = (file) => {
 	reader.readAsDataURL(file);
 };
 
+onMounted(() => {
+	socket.on('update_users', (users) => {
+		userStatuses.value = users;
+		console.log('Updated users:', users);
+	});
+
+});
+
 </script>
 
 <template>

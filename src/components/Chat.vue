@@ -134,6 +134,20 @@ const notifyTyping = () => {
 	socket.emit('typing', userName.value); // Отправляем на сервер, что пользователь печатает
 };
 
+// Отправка файла
+const sendFile = (file) => {
+	const reader = new FileReader();
+	reader.onload = () => {
+		const data = {
+			sender: userName.value,
+			file: reader.result,
+			fileName: file.name,
+		};
+		socket.emit('send_file', data);
+	};
+	reader.readAsDataURL(file);
+};
+
 </script>
 
 <template>

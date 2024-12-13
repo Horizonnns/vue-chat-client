@@ -197,6 +197,17 @@ onMounted(() => {
 		}
 	});
 
+	// пользователь покинул чат
+	socket.on('user_left', (userName) => {
+		messages.value.push({
+			userName: 'Система',
+			message: `${userName} покинул чат.`,
+		});
+		if (connectedUser.value === userName) {
+			connectedUser.value = null; // Удаляем информацию о пользователе
+		}
+	});
+
 </script>
 
 <template>

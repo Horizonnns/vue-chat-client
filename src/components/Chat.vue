@@ -186,6 +186,17 @@ onMounted(() => {
 		console.log(user);
 	});
 
+	// Пользователь печатает..
+	socket.on('typing', (user) => {
+		if (user !== userName.value) {
+			typingUser.value = user;
+			clearTimeout(typingTimeout.value);
+			typingTimeout.value = setTimeout(() => {
+				typingUser.value = null;
+			}, 2000);
+		}
+	});
+
 </script>
 
 <template>

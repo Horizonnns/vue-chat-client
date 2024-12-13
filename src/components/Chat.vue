@@ -230,6 +230,20 @@ onUnmounted(() => {
 </script>
 
 <template>
+
+					<!-- show-users-status -->
+					<div
+						v-if="userStatuses[connectedUser]"
+						class="text-green-500 text-sm font-medium"
+					>
+						<span v-if="userStatuses[connectedUser].isOnline"> Онлайн </span>
+
+						<span v-else class="text-gray-500">
+							был(а) в {{ userStatuses[connectedUser].lastSeen }}
+						</span>
+					</div>
+				</div>
+
 				<!-- modal-for-delete-or-leave-chat -->
 				<div v-if="chatCreator" class="relative">
 					<!-- Кнопка с тремя точками -->

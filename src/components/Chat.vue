@@ -230,20 +230,39 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<div class="chat-container bg-gray-100 p-4 rounded shadow">
-		<!-- Список сообщений -->
-		<div class="messages h-64 overflow-y-scroll mb-4">
+
+			<!-- Чат -->
+			<div
+				v-if="isInChat"
+				class="flex flex-col space-y-2 mt-4 overflow-y-scroll h-[78vh]"
+			>
 			<div
 				v-for="message in messages"
 				:key="message.id"
 				:class="[
-					'break-words max-w-xs rounded-lg my-1 px-2 py-1 ',
-					message.sender === userName
-						? 'bg-green-200 self-end'
-						: 'bg-gray-200 self-start',
+						'break-words max-w-xs rounded-lg text-sm px-2 py-1',
+						message.userName === 'Система'
+							? 'bg-gray-100 dark:bg-gray-800 dark:text-gray-500 text-gray-400 italic mx-auto max-w-xs my-2'
+							: message.userName === userName
+							? 'bg-green-200 dark:bg-green-600 self-end message-sent'
+							: 'bg-gray-200 dark:bg-gray-600 self-start message-received',
 				]"
 			>
-				{{ message.text }}
+					<!-- <strong>{{ message.userName }}:</strong> {{ message.message }} -->
+
+					<div class="flex items-end space-x-1 leading-4">
+						<p>{{ message.message }}</p>
+
+						<p class="text-[10px] font-medium text-gray-500 opacity-0">
+							{{ message.time }}
+						</p>
+
+						<p
+							class="absolute text-[10px] right-1 bottom-px font-medium text-gray-500"
+						>
+							{{ message.time }}
+						</p>
+					</div>
 			</div>
 		</div>
 

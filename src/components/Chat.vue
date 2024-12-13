@@ -68,6 +68,24 @@ const joinRoom = () => {
 	}
 };
 
+// Отправить сообщение
+const sendMessage = () => {
+	const currentTime = new Date().toLocaleTimeString([], {
+		hour: '2-digit',
+		minute: '2-digit',
+	}); // Получаем текущее время;
+
+	if (newMessage.value.trim()) {
+		socket.emit('send_message', {
+			password: password.value || chatPassword.value,
+			userName: userName.value,
+			message: newMessage.value,
+			currentTime,
+		});
+		newMessage.value = '';
+	}
+};
+
 </script>
 
 <template>

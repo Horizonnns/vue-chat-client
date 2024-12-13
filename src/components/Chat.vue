@@ -47,6 +47,27 @@ const createRoom = () => {
 	);
 };
 
+// Присоединиться к комнате
+const joinRoom = () => {
+	if (userName.value.trim() && chatPassword.value.trim()) {
+		socket.emit(
+			'join_room',
+			{ userName: userName.value, password: chatPassword.value },
+			(response) => {
+				if (response.success) {
+					isInChat.value = true;
+					action.value = null;
+					chatCreator.value = response.creator;
+					messages.value = [];
+					socket.emit('user_connected', userName.value); // Уведомляем сервер о подключении
+				} else {
+					alert(response.message);
+				}
+			}
+		);
+	}
+};
+
 </script>
 
 <template>
